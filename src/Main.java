@@ -16,45 +16,46 @@ public class Main {
             int index = 0;
             int i = 0;
             int j = 0;
-            int sum =1;
-            String result ="";
-            String result1 = "";
+            int sum = 1;
+            String result = "";
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 index = count_column(data);
-
                 boolean notCounted = true;
-            for (i = 0; i < data.length(); i++) {
-                if (data.charAt(i) != SPACE && data.charAt(i) != TAB && data.charAt(i) != BREAK_LINE && data.charAt(i) != BREAK_LINE1) {
-                    if (notCounted) {
-                        count++;
-                        notCounted = false;
+                for (i = 0; i < data.length(); i++) {
+                    if (data.charAt(i) != SPACE && data.charAt(i) != TAB && data.charAt(i) != BREAK_LINE && data.charAt(i) != BREAK_LINE1) {
+                        if (notCounted) {
+                            count++;
+                            notCounted = false;
+                        }
+                    } else {
+                        notCounted = true;
                     }
-                } else {
-                    notCounted = true;
+                }
+                System.out.println(data);
+                if ((count % index) != 0) {
+                    result = "đây không phải ma trận";
+                }
+                else if(!isNumeric(data)){
+                    result ="đây không phải ma trận vì chứa chữ";
+                } else{
+                    result = "đây là ma trận";
                 }
             }
 
-            System.out.println(count);
-            if(count == index){
-                result ="đây là ma trận";
-                count = count - index;
-            }
-            else {
-                result = "đây không là ma trận";
-                break;
-            }
-            }
-
-
-
+            System.out.println(result);
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
-    public static int  count_column(String data) {
+
+    public static boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");
+    }
+
+    public static int count_column(String data) {
         //Đếm số phần tử trong 1 dòng
         int count = 0;
         boolean notCounted = true;
