@@ -5,6 +5,12 @@ import java.io.IOException;
 
 public class Test {
     public static void main(String[] args) throws IOException {
+
+    }
+}
+
+        /*
+       //Viết lên tệp txt
         BufferedWriter bufferedWriter = null;
         FileWriter fileWriter = null;
         String data ="";
@@ -30,6 +36,5 @@ public class Test {
                 ex.printStackTrace();
             }
         }
-
-    }
 }
+         */

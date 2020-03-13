@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Scanner;
 
 
 public class Main {
@@ -7,94 +8,58 @@ public class Main {
     public static final char BREAK_LINE = '\n';
     public static final char BREAK_LINE1 = '\r';
 
-
-    public static void main(String[] args) throws IOException {
-        FileInputStream f_in = null;
-        f_in = new FileInputStream("E://javacore/input.txt");
-        String input = "";
-        BufferedWriter bufferedWriter = null;
-        FileWriter fileWriter = null;
-        String data = "";
+    public static void main(String[] args) {
         try {
-            //Đọc file, đếm số phần tử
+            File myObj = new File("E://javacore/input.txt");
+            Scanner myReader = new Scanner(myObj);
+            int count = 0;
+            int index = 0;
             int i = 0;
             int j = 0;
-            //Đọc file, đếm số phần tử
-            while ((i = f_in.read()) != -1) {
-                //System.out.println((char) i);
-                input += (char) i;
-            }
-            //System.out.println(input);
-            int index = countWords(input);
-            int size = (int) (Math.sqrt(index) + 1);
-//            //Tạo 1 mảng để lưu
-//            int array[][] = new int[size][size];
-//            for (i = 0; i < size; i++) {
-//                for (j = 0; j < size + 1; j++) {
-//                    if (input.charAt(i) != SPACE && input.charAt(i) != TAB && input.charAt(i) != BREAK_LINE && input.charAt(i) != BREAK_LINE1) {
-//                        array[i][j] = input.charAt(i);
-//                    }
-//                }
-//            }
-//            //In ra ma tran
-//            for (i = 0; i < size; i++) {
-//                for (j = 0; j < size + 1; j++) {
-//                    System.out.println(array[i][j]);
-//                }
-//            }
-            //Kiem tra xem co phai la ma tran hay khong
-            for(i = 1;i<Math.sqrt(index); i++){
+            int sum =1;
+            String result ="";
+            String result1 = "";
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                index = count_column(data);
 
-                if((i*(i+1)) != index){
-                    data = " Day khong la ma tran\n" +
-                            "================================================";
-                }else {
-                    data ="Day  la ma tran";
+                boolean notCounted = true;
+            for (i = 0; i < data.length(); i++) {
+                if (data.charAt(i) != SPACE && data.charAt(i) != TAB && data.charAt(i) != BREAK_LINE && data.charAt(i) != BREAK_LINE1) {
+                    if (notCounted) {
+                        count++;
+                        notCounted = false;
+                    }
+                } else {
+                    notCounted = true;
                 }
             }
 
-            f_in.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            f_in.close();
-        }
-
-        //Xu lý chèn lên tệp tin
-        try {
-            data = "\n Day la ma tran\n" +
-                    "================================================";
-            File file = new File("E://javacore/input.txt");
-            if (!file.exists()) {
-                file.createNewFile();
+            System.out.println(count);
+            if(count == index){
+                result ="đây là ma trận";
+                count = count - index;
             }
-            fileWriter = new FileWriter(file.getAbsoluteFile(), true);
-            bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(data);
-        } catch (IOException e) {
+            else {
+                result = "đây không là ma trận";
+                break;
+            }
+            }
+
+
+
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
             e.printStackTrace();
-        } finally {
-            try {
-                if (bufferedWriter != null)
-                    bufferedWriter.close();
-                if (fileWriter != null)
-                    fileWriter.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
         }
     }
-    //Đếm số phần tử của tệp
-    public static int countWords(String input) {
-        if (input == null) {
-            return -1;
-        }
+    public static int  count_column(String data) {
+        //Đếm số phần tử trong 1 dòng
         int count = 0;
-        int size = input.length();
         boolean notCounted = true;
-        for (int i = 0; i < size; i++) {
-            if (input.charAt(i) != SPACE && input.charAt(i) != TAB && input.charAt(i) != BREAK_LINE && input.charAt(i) != BREAK_LINE1) {
+        for (int i = 0; i < data.length(); i++) {
+            if (data.charAt(i) != SPACE && data.charAt(i) != TAB && data.charAt(i) != BREAK_LINE && data.charAt(i) != BREAK_LINE1) {
                 if (notCounted) {
                     count++;
                     notCounted = false;
